@@ -1,9 +1,25 @@
-import {Post } from '@/app/components/Post';
+import { Post } from '@/app/components/Post';
 import { render } from '@testing-library/react';
+import { formatDistanceToNowStrict } from 'date-fns';
+
+jest.mock('date-fns', () => ({
+  formatDistanceToNowStrict: jest.fn(),
+}));
 
 describe('Post', () => {
   it('should render the post component', () => {
-    const screen = render(<Post />);
+    (formatDistanceToNowStrict as jest.Mock).mockReturnValue('25 minutes ago');
+
+    const mockPost = {
+      id: '1',
+      title: 'My First Post at CodeLeap Network!',
+      content:
+        'Curabitur suscipit suscipit tellus. Phasellus consectetuer vestibulum elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
+      created_datetime: new Date(),
+      username: 'Victor',
+    };
+
+    const screen = render(<Post data={mockPost} />);
 
     const title = screen.getByText('My First Post at CodeLeap Network!');
     expect(title).toBeInTheDocument();
@@ -20,7 +36,9 @@ describe('Post', () => {
     const time = screen.getByText('25 minutes ago');
     expect(time).toBeInTheDocument();
 
-    const content = screen.getByText(/Curabitur suscipit suscipit tellus/i);
+    const content = screen.getByText(
+      'Curabitur suscipit suscipit tellus. Phasellus consectetuer vestibulum elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
+    );
     expect(content).toBeInTheDocument();
   });
 });
