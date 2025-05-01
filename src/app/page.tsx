@@ -6,7 +6,7 @@ export default function Home() {
       <header>CodeLeap Network</header>
       <h1 className="text-2xl text-gray-light">Hello Home</h1>
       <h2 className="bg-grayDark">ola</h2>
-      <Button isLoading>Button</Button>
+      <Button styles="submit">Button</Button>
     </main>
   );
 }

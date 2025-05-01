@@ -8,7 +8,7 @@ describe('Button', () => {
     const button = screen.getByRole('button', { name: 'Default' });
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass(
-      'flex items-center justify-center w-[120px] h-[32px] rounded-lg box-border font-bold border-1 border-gray-medium text-black',
+      'flex items-center justify-center w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer border-1 border-black text-black bg-white active:bg-gray-light',
     );
   });
 
@@ -18,7 +18,7 @@ describe('Button', () => {
     const button = screen.getByRole('button', { name: 'Default' });
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass(
-      'flex items-center justify-center w-[120px] h-[32px] rounded-lg box-border font-bold bg-red color-white bg-red/90',
+      'flex items-center justify-center w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer bg-red text-white active:bg-red/80',
     );
   });
 
@@ -28,7 +28,7 @@ describe('Button', () => {
     const button = screen.getByRole('button', { name: 'Default' });
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass(
-      'flex items-center justify-center w-[120px] h-[32px] rounded-lg box-border font-bold bg-green color-white bg-green/90',
+      'flex items-center justify-center w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer bg-green text-white active:bg-green/80',
     );
   });
 
@@ -38,7 +38,7 @@ describe('Button', () => {
     const button = screen.getByRole('button', { name: 'Default' });
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass(
-      'flex items-center justify-center w-[120px] h-[32px] rounded-lg box-border font-bold bg-primary hover:bg-primary-600',
+      'flex items-center justify-center w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer bg-primary text-white active:bg-primary/80',
     );
   });
 
