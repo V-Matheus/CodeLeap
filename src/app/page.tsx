@@ -1,12 +1,14 @@
-import { Button } from "./components/Button";
+import CreateMyPost from './components/CreateMyPost';
 
 export default function Home() {
   return (
-    <main className="flex flex-col w-[800px] h-screen">
-      <header>CodeLeap Network</header>
-      <h1 className="text-2xl text-gray-light">Hello Home</h1>
-      <h2 className="bg-grayDark">ola</h2>
-      <Button styles="submit">Button</Button>
-    </main>
+    <section className="flex fle-1 flex-col w-[800px] h-screen">
+      <header className="flex items-center pl-[37px] h-20 bg-primary">
+        <h1 className="text-[22px] text-white font-bold">CodeLeap Network</h1>
+      </header>
+      <main className="flex flex-1 flex-col bg-white p-6">
+        <CreateMyPost />
+      </main>
+    </section>
   );
 }

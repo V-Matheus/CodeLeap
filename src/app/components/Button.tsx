@@ -1,5 +1,6 @@
 import { ComponentProps } from 'react';
 import { Loader } from './Loader';
+import clsx from 'clsx';
 
 interface ButtonProps extends ComponentProps<'button'> {
   styles?: 'base' | 'danger' | 'save' | 'submit';
@@ -9,6 +10,7 @@ interface ButtonProps extends ComponentProps<'button'> {
 export function Button({
   styles = 'base',
   isLoading = false,
+  className,
   ...props
 }: ButtonProps) {
   let buttonStyle: string;
@@ -31,7 +33,11 @@ export function Button({
   return (
     <button
       disabled={isLoading}
-      className={`flex items-center justify-center w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer ${buttonStyle} `}
+      className={clsx(
+        'flex items-center justify-center w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer',
+        buttonStyle,
+        className,
+      )}
       {...props}
     >
       {isLoading ? <Loader /> : props.children}
