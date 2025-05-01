@@ -1,4 +1,4 @@
-import CreateMyPost from '@/app/components/CreateMyPost';
+import { CreateMyPost } from '@/app/components/CreateMyPost';
 import { render } from '@testing-library/react';
 
 describe('CreateMyPost', () => {
@@ -8,13 +8,13 @@ describe('CreateMyPost', () => {
     const title = screen.getByText('What’s on your mind?');
     expect(title).toBeInTheDocument();
 
-    const titleLabel = screen.getByLabelText("Title");
+    const titleLabel = screen.getByLabelText('Title');
     expect(titleLabel).toBeInTheDocument();
 
     const titleInput = screen.getByPlaceholderText('Hello world');
     expect(titleInput).toBeInTheDocument();
 
-    const contentLabel = screen.getByLabelText("Content");
+    const contentLabel = screen.getByLabelText('Content');
     expect(contentLabel).toBeInTheDocument();
 
     const contentTextarea = screen.getByPlaceholderText('Content here');

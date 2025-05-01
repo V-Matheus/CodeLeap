@@ -1,4 +1,5 @@
-import CreateMyPost from './components/CreateMyPost';
+import { CreateMyPost } from './components/CreateMyPost';
+import { Post } from './components/Post';
 
 export default function Home() {
   return (
@@ -6,8 +7,19 @@ export default function Home() {
       <header className="flex items-center pl-[37px] h-20 bg-primary">
         <h1 className="text-[22px] text-white font-bold">CodeLeap Network</h1>
       </header>
-      <main className="flex flex-1 flex-col bg-white p-6">
+      <main className="flex flex-1 flex-col bg-white p-6 overflow-auto">
         <CreateMyPost />
+        <ul className="space-y-6 mt-6">
+          <li>
+            <Post />
+          </li>
+          <li>
+            <Post />
+          </li>
+          <li>
+            <Post />
+          </li>
+        </ul>
       </main>
     </section>
   );

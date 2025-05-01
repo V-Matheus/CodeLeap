@@ -1,6 +1,6 @@
 import { Button } from "./Button";
 
-export default function CreateMyPost() {
+export function CreateMyPost() {
   return (
     <form className="flex flex-col gap-6 w-full border-1 border-gray-medium rounded-2xl p-6">
           <h2 className="font-bold text-[22px]">What’s on your mind?</h2>
