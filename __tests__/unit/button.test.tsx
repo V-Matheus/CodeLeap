@@ -8,7 +8,7 @@ describe('Button', () => {
     const button = screen.getByRole('button', { name: 'Default' });
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass(
-      'flex items-center justify-center w-[120px] h-[32px] rounded-lg box-border font-bold border-1 border-black text-black',
+      'flex items-center justify-center w-[120px] h-[32px] rounded-lg box-border font-bold border-1 border-gray-medium text-black',
     );
   });
 
