@@ -1,4 +1,4 @@
-import { ComponentProps } from 'react';
+import { ComponentProps, ReactNode } from 'react';
 import { Loader } from './Loader';
 import clsx from 'clsx';
 
@@ -41,6 +41,37 @@ export function Button({
       {...props}
     >
       {isLoading ? <Loader /> : props.children}
+    </button>
+  );
+}
+
+interface IconButtonProps extends ComponentProps<'button'> {
+  icon: ReactNode;
+  size?: 'small' | 'medium' | 'large';
+}
+
+export function IconButton({
+  className,
+  size = 'small',
+  icon,
+  ...props
+}: IconButtonProps) {
+  const sizeClasses = {
+    small: 'w-6 h-6',
+    medium: 'w-8 h-8',
+    large: 'w-10 h-10',
+  };
+
+  return (
+    <button
+      className={clsx(
+        'flex items-center justify-center rounded-full transition-colors cursor-pointer',
+        sizeClasses[size],
+        className,
+      )}
+      {...props}
+    >
+      {icon}
     </button>
   );
 }
