@@ -7,16 +7,44 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import { Modal } from './Modal';
 import { useState } from 'react';
 import { Button, IconButton } from './Button';
-import { Career, deleteCareer } from '@/services/careers';
+import { Career, deleteCareer, editCareer } from '@/services/careers';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 export function Post({ data }: { data: Career }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'delete' | 'edit' | null>(null);
 
   async function handleDelete() {
-    deleteCareer(data.id);
-    setIsModalOpen(false);
+    try {
+      deleteCareer(data.id);
+    } catch (error) {
+      console.error('Error during sign up:', error);
+    } finally {
+      setIsModalOpen(false);
+    }
   }
+
+  const { register, handleSubmit, reset } = useForm<{
+    title: string;
+    content: string;
+  }>();
+
+  const handleEdit: SubmitHandler<{ title: string; content: string }> = async (
+    request,
+  ) => {
+    try {
+      await editCareer(data.id, {
+        title: request.title,
+        content: request.content,
+      });
+
+      reset();
+    } catch (error) {
+      console.error('Error during sign up:', error);
+    } finally {
+      setIsModalOpen(false);
+    }
+  };
 
   return (
     <article className="flex flex-col w-full">
@@ -65,13 +93,14 @@ export function Post({ data }: { data: Career }) {
               : 'Are you sure you want to delete this item?'}
           </h2>
           {modalType === 'edit' && (
-            <form>
+            <form onSubmit={handleSubmit(handleEdit)}>
               <label className="flex flex-col gap-2">
                 Title
                 <input
                   className="placeholder:text-sm placeholder:text-gray-light pl-3 py-2 border-1 border-gray-dark rounded-lg"
                   type="text"
                   placeholder="Hello world"
+                  {...register('title')}
                 />
               </label>
 
@@ -80,21 +109,28 @@ export function Post({ data }: { data: Career }) {
                 <textarea
                   className="placeholder:text-sm placeholder:text-gray-light pl-3 py-2 border-1 border-gray-dark rounded-lg resize-none"
                   placeholder="Content here"
+                  {...register('content')}
                 />
               </label>
+              <section className="flex justify-end gap-4 mt-10">
+                <Button onClick={() => setIsModalOpen(false)}>Cancel</Button>
+
+                <Button type="submit" styles="save">
+                  Save
+                </Button>
+              </section>
             </form>
           )}
 
-          <section className="flex justify-end gap-4 mt-10">
-            <Button onClick={() => setIsModalOpen(false)}>Cancel</Button>
+          {modalType === 'delete' && (
+            <section className="flex justify-end gap-4 mt-10">
+              <Button onClick={() => setIsModalOpen(false)}>Cancel</Button>
 
-            <Button
-              styles={modalType === 'edit' ? 'save' : 'danger'}
-              onClick={modalType === 'edit' ? () => {} : handleDelete}
-            >
-              {modalType === 'edit' ? 'Save' : 'Delete'}
-            </Button>
-          </section>
+              <Button styles="danger" onClick={handleDelete}>
+                Delete
+              </Button>
+            </section>
+          )}
         </Modal>
       )}
     </article>

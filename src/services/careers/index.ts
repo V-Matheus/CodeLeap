@@ -60,3 +60,21 @@ export async function deleteCareer(id: number) {
     throw error;
   }
 }
+
+interface EditCareerRequest {
+  title: string;
+  content: string;
+}
+
+export async function editCareer(id: number, post: EditCareerRequest) {
+  try {
+    const response = await api.patch<Career>(`/careers/${id}/`, post);
+
+    revalidatePath('/');
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching careers:', error);
+    throw error;
+  }
+}

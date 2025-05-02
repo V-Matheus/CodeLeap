@@ -6,8 +6,7 @@ export const revalidate = 0;
 
 export default async function Home() {
   const careers = await getCareers();
-  console.log(careers);
-
+  
   return (
     <section className="flex fle-1 flex-col w-[800px] h-screen">
       <header className="flex items-center pl-[37px] h-20 bg-primary">

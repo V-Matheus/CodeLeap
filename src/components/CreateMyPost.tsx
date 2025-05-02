@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 
 export function CreateMyPost() {
   const user = useSelector((state: RootState) => state.user);
-  console.log(user);
 
   const { register, handleSubmit, reset } = useForm<{
     title: string;
@@ -18,15 +17,13 @@ export function CreateMyPost() {
     data,
   ) => {
     try {
-      const response = await postCareer({
+      await postCareer({
         username: user.username,
         title: data.title,
         content: data.content,
       });
 
       reset();
-
-      console.log(response);
     } catch (error) {
       console.error('Error during sign up:', error);
     }
