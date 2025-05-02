@@ -7,8 +7,9 @@ import { useSelector } from 'react-redux';
 
 export function CreateMyPost() {
   const user = useSelector((state: RootState) => state.user);
+  console.log(user);
 
-  const { register, handleSubmit } = useForm<{
+  const { register, handleSubmit, reset } = useForm<{
     title: string;
     content: string;
   }>();
@@ -22,6 +23,8 @@ export function CreateMyPost() {
         title: data.title,
         content: data.content,
       });
+
+      reset();
 
       console.log(response);
     } catch (error) {

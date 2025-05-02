@@ -2,8 +2,11 @@ import { CreateMyPost } from '@/components/CreateMyPost';
 import { Post } from '@/components/Post';
 import { getCareers } from '@/services/careers';
 
+export const revalidate = 0;
+
 export default async function Home() {
   const careers = await getCareers();
+  console.log(careers);
 
   return (
     <section className="flex fle-1 flex-col w-[800px] h-screen">

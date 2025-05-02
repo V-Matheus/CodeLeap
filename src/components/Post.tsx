@@ -7,11 +7,16 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import { Modal } from './Modal';
 import { useState } from 'react';
 import { Button, IconButton } from './Button';
-import { Career } from '@/services/careers';
+import { Career, deleteCareer } from '@/services/careers';
 
 export function Post({ data }: { data: Career }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'delete' | 'edit' | null>(null);
+
+  async function handleDelete() {
+    deleteCareer(data.id);
+    setIsModalOpen(false);
+  }
 
   return (
     <article className="flex flex-col w-full">
@@ -83,7 +88,10 @@ export function Post({ data }: { data: Career }) {
           <section className="flex justify-end gap-4 mt-10">
             <Button onClick={() => setIsModalOpen(false)}>Cancel</Button>
 
-            <Button styles={modalType === 'edit' ? 'save' : 'danger'}>
+            <Button
+              styles={modalType === 'edit' ? 'save' : 'danger'}
+              onClick={modalType === 'edit' ? () => {} : handleDelete}
+            >
               {modalType === 'edit' ? 'Save' : 'Delete'}
             </Button>
           </section>

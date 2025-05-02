@@ -1,4 +1,6 @@
+'use server';
 import { api } from '../axios';
+import { revalidatePath } from 'next/cache';
 
 export interface Career {
   author_ip: string;
@@ -36,6 +38,21 @@ interface PostCareersRequest {
 export async function postCareer(post: PostCareersRequest) {
   try {
     const response = await api.post<Career>('/careers/', post);
+
+    revalidatePath('/');
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching careers:', error);
+    throw error;
+  }
+}
+
+export async function deleteCareer(id: number) {
+  try {
+    const response = await api.delete<Career>(`/careers/${id}/`);
+
+    revalidatePath('/');
 
     return response.data;
   } catch (error) {
