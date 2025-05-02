@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Button, IconButton } from './Button';
 import { Career, deleteCareer, editCareer } from '@/services/careers';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { Bounce, toast } from 'react-toastify';
 
 export function Post({ data }: { data: Career }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,6 +18,17 @@ export function Post({ data }: { data: Career }) {
   async function handleDelete() {
     try {
       deleteCareer(data.id);
+      toast.success('Career deleted', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
     } catch (error) {
       console.error('Error during sign up:', error);
     } finally {
@@ -42,6 +54,18 @@ export function Post({ data }: { data: Career }) {
       });
 
       reset();
+
+      toast.success('Career edited', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
     } catch (error) {
       console.error('Error during sign up:', error);
     } finally {

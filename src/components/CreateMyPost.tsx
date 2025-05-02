@@ -4,6 +4,7 @@ import { Button } from './Button';
 import { RootState } from '@/store/store';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { Bounce, toast } from 'react-toastify';
 
 export function CreateMyPost() {
   const user = useSelector((state: RootState) => state.user);
@@ -24,6 +25,18 @@ export function CreateMyPost() {
       });
 
       reset();
+
+      toast.success('Career created', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
     } catch (error) {
       console.error('Error during sign up:', error);
     }
