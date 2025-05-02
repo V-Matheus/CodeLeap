@@ -24,10 +24,13 @@ export function Post({ data }: { data: Career }) {
     }
   }
 
-  const { register, handleSubmit, reset } = useForm<{
+  const { register, handleSubmit, reset, setValue } = useForm<{
     title: string;
     content: string;
   }>();
+
+  setValue('title', data.title);
+  setValue('content', data.content);
 
   const handleEdit: SubmitHandler<{ title: string; content: string }> = async (
     request,
