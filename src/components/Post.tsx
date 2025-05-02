@@ -7,18 +7,9 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import { Modal } from './Modal';
 import { useState } from 'react';
 import { Button, IconButton } from './Button';
+import { Career } from '@/services/careers';
 
-export interface PostProps {
-  data: {
-    id: string;
-    username: string;
-    created_datetime: Date;
-    title: string;
-    content: string;
-  };
-}
-
-export function Post({ data }: PostProps) {
+export function Post({ data }: { data: Career }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'delete' | 'edit' | null>(null);
 
