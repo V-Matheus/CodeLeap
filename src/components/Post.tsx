@@ -7,6 +7,8 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import { Modal } from './Modal';
 import { useState } from 'react';
 import { Button, IconButton } from './Button';
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
 
 export interface PostProps {
   data: {
@@ -21,6 +23,9 @@ export interface PostProps {
 export function Post({ data }: PostProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'delete' | 'edit' | null>(null);
+
+  const user = useSelector((state: RootState) => state.user);
+  console.log(user);  
 
   return (
     <article className="flex flex-col w-full">

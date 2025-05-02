@@ -1,14 +1,8 @@
-'use client';
-import { CreateMyPost } from "@/components/CreateMyPost";
-import { Post } from "@/components/Post";
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
+import { CreateMyPost } from '@/components/CreateMyPost';
+import { Post } from '@/components/Post';
+import { getCareers } from '@/services/careers';
 
-export default function Home() {
-
-  const user = useSelector((state: RootState) => state.user);
-  console.log(user);  
-
+export default async function Home() {
   const mockPosts = [
     {
       content:
@@ -35,6 +29,9 @@ export default function Home() {
       username: 'John',
     },
   ];
+
+  const careers = await getCareers();
+  console.log(careers);
 
   return (
     <section className="flex fle-1 flex-col w-[800px] h-screen">
