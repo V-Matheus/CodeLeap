@@ -1,4 +1,4 @@
-import { CreateMyPost } from '@/app/components/CreateMyPost';
+import { CreateMyPost } from '@/components/CreateMyPost';
 import { render } from '@testing-library/react';
 
 describe('CreateMyPost', () => {

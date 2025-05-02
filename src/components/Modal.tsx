@@ -1,13 +1,14 @@
+'use client';
 import { ComponentProps, MouseEvent } from 'react';
 
 interface ModalProps extends ComponentProps<'dialog'> {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 export function Modal({ onClose, ...props }: ModalProps) {
   const handleClickOutside = (event: MouseEvent<HTMLDialogElement>) => {
     const dialog = event.target as HTMLDialogElement;
-    if (dialog.tagName === 'DIALOG' && event.target === dialog) {
+    if (dialog.tagName === 'DIALOG' && event.target === dialog && onClose) {
       onClose();
     }
   };

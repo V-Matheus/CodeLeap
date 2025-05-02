@@ -1,4 +1,4 @@
-import { Post } from '@/app/components/Post';
+import { Post } from '@/components/Post';
 import { render } from '@testing-library/react';
 import { formatDistanceToNowStrict } from 'date-fns';
 

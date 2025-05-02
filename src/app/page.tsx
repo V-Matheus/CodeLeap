@@ -1,5 +1,5 @@
-import { CreateMyPost } from './components/CreateMyPost';
-import { Post } from './components/Post';
+import { CreateMyPost } from "@/components/CreateMyPost";
+import { Post } from "@/components/Post";
 
 export default function Home() {
   const mockPosts = [

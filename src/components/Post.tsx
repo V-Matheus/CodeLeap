@@ -5,8 +5,8 @@ import Trash from '@/assets/ic_baseline-delete-forever.svg';
 import Edit from '@/assets/bx_bx-edit.svg';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { Modal } from './Modal';
-import { Button, IconButton } from './Button';
 import { useState } from 'react';
+import { Button, IconButton } from './Button';
 
 export interface PostProps {
   data: {

@@ -1,4 +1,4 @@
-import { IconButton } from '@/app/components/Button';
+import { IconButton } from '@/components/Button';
 import { render } from '@testing-library/react';
 import Trash from '@/assets/ic_baseline-delete-forever.svg';
 import Image from 'next/image';
