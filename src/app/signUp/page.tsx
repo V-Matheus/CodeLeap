@@ -1,10 +1,9 @@
 import { Button } from '@/components/Button';
-import { Modal } from '@/components/Modal';
 
 export default function signUpPage() {
   return (
     <main className="flex flex-1 justify-center items-center h-screen">
-      <Modal>
+      <article className="bg-white w-[660px] p-6 rounded-2xl border-1 border-gray-medium">
         <h2 className="text-[22px] font-bold">Welcome to CodeLeap network!</h2>
         <form>
           <label className="flex flex-col gap-2">
@@ -20,7 +19,7 @@ export default function signUpPage() {
         <section className="flex justify-end gap-4 mt-10">
           <Button styles={'submit'}>ENTER</Button>
         </section>
-      </Modal>
+      </article>
     </main>
   );
 }
