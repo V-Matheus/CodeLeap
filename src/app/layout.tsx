@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import './globals.css';
+import ClienteProvider from '@/components/ClienteProvider';
 
 const roboto = Roboto({
   variable: '--font-geist-mono',
@@ -18,8 +19,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${roboto.variable} antialiased flex justify-center`}>{children}</body>
-    </html>
+    <ClienteProvider>
+      <html lang="en">
+        <body className={`${roboto.variable} antialiased flex justify-center`}>
+          {children}
+        </body>
+      </html>
+    </ClienteProvider>
   );
 }

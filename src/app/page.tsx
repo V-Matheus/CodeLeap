@@ -1,7 +1,14 @@
+'use client';
 import { CreateMyPost } from "@/components/CreateMyPost";
 import { Post } from "@/components/Post";
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
 
 export default function Home() {
+
+  const user = useSelector((state: RootState) => state.user);
+  console.log(user);  
+
   const mockPosts = [
     {
       content:

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const usernameCookie = request.cookies.get('@codeleap:username');
+  const usernameCookie = request.cookies.get('@codeleap:token');
 
   if (usernameCookie && request.nextUrl.pathname === '/signUp') {
     return NextResponse.redirect(new URL('/', request.url));

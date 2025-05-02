@@ -3,19 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "jest"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.7.0",
     "axios": "^1.9.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "next": "15.3.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.1",
+    "react-redux": "^9.2.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: UserState = {
-  user: null,
+const initialState: User | null = {
+  id: '',
+  username: '',
 };
 
 const userSlice = createSlice({
@@ -9,10 +10,15 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {
-      state.user = action.payload;
+      if (state) {
+        state.id = action.payload.id;
+        state.username = action.payload.username;
+      } else {
+        return action.payload;
+      }
     },
-    resetUserState: (state) => {
-      state.user = initialState.user;
+    resetUserState: () => {
+      return initialState;
     },
   },
 });
