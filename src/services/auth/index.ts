@@ -2,13 +2,13 @@
 import { cookies } from 'next/headers';
 import { v4 as uuidv4 } from 'uuid';
 
-const COOKIES_KEY = '@codeleap:token';
+const COOKIES_KEY = '@codeleap';
 
 export async function signUp(username: string) {
   try {
     const id = uuidv4();
 
-    (await cookies()).set(`${COOKIES_KEY}`, id, {
+    (await cookies()).set(`${COOKIES_KEY}:token`, id, {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',
