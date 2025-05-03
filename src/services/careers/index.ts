@@ -11,16 +11,29 @@ export interface Career {
   username: string;
 }
 
-interface GetCareersResponse {
+export interface GetCareersResponse {
   count: number;
   next: null;
   previous: null;
   results: Career[];
 }
 
-export async function getCareers() {
+export async function getCareers({
+  getNext = false,
+}: { getNext?: boolean } = {}) {
   try {
     const response = await api.get<GetCareersResponse>('/careers');
+    if (response.data.next && getNext) {
+      console.log('getNext');
+
+      const nextResponse = await api.get<GetCareersResponse>(
+        response.data.next,
+      );
+      response.data.results = [
+        ...response.data.results,
+        ...nextResponse.data.results,
+      ];
+    }
 
     return response.data;
   } catch (error) {

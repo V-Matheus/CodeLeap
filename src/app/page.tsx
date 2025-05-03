@@ -1,13 +1,13 @@
 import { CreateMyPost } from '@/components/CreateMyPost';
-import { Post } from '@/components/Post';
-import { getCareers } from '@/services/careers';
+import dynamic from 'next/dynamic';
 
 export const revalidate = 0;
 
-export default async function Home() {
-  const careers = await getCareers();
-  
+const PostsList = dynamic(() =>
+  import('@/components/PostsList').then((module) => module.PostsList),
+);
 
+export default async function Home() {
   return (
     <section className="flex fle-1 flex-col w-[800px] h-screen">
       <header className="flex items-center pl-[37px] h-20 bg-primary">
@@ -15,13 +15,7 @@ export default async function Home() {
       </header>
       <main className="flex flex-1 flex-col bg-white p-6 overflow-auto">
         <CreateMyPost />
-        <ul className="space-y-6 mt-6">
-          {careers.results.map((post) => (
-            <li key={post.id}>
-              <Post data={post} />
-            </li>
-          ))}
-        </ul>
+        <PostsList />
       </main>
     </section>
   );

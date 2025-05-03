@@ -12,16 +12,19 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Bounce, toast } from 'react-toastify';
 import { AnimatePresence, motion } from 'framer-motion';
 
-export function Post({ data }: { data: Career }) {
+interface PostProps {
+  data: Career;
+}
+
+export function Post({ data }: PostProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'delete' | 'edit' | null>(null);
 
   async function handleDelete() {
     try {
-      deleteCareer(data.id);
+      await deleteCareer(data.id);
       toast.success('Career deleted', {
         position: 'bottom-right',
-        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,

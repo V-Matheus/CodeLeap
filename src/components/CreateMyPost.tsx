@@ -28,7 +28,6 @@ export function CreateMyPost() {
 
       toast.success('Career created', {
         position: 'bottom-right',
-        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
