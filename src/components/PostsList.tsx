@@ -1,45 +1,44 @@
 'use client';
-import { getCareers, GetCareersResponse } from '@/services/careers';
-import { useCallback, useEffect, useState } from 'react';
+import { getCareers } from '@/services/careers';
+import { useCallback, useEffect } from 'react';
 import { Post } from '@/components/Post';
 import { Loader } from './Loader';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 export function PostsList() {
-  const [getNext, setGetNext] = useState(false);
-  const [careers, setCareers] = useState<GetCareersResponse | null>(null);
-  const [firstLoad, setFirstLoad] = useState(true);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    error,
+  } = useInfiniteQuery({
+    queryKey: ['careers'],
+    queryFn: async ({ pageParam = false }) => {
+      const response = await getCareers({ getNext: Boolean(pageParam) });
+      return response;
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => lastPage.next || undefined,
+  });
 
-  const handleMorePosts = useCallback(async () => {
-    if (careers && careers.results.length >= careers.count) {
-      return;
-    }
-
-    const response = await getCareers({ getNext });
-    setCareers(response);
-    setGetNext(false);
-  }, [getNext, careers]);
-
-  useEffect(() => {
-    if (getNext || firstLoad) {
-      setFirstLoad(false);
-      handleMorePosts();
-    }
-  }, [handleMorePosts, getNext, firstLoad]);
+  console.log(data);
 
   const handleScroll = useCallback(() => {
-    if (careers && careers.results.length >= careers.count) {
-      return;
-    }
-
     const mainElement = document.querySelector('main');
     if (!mainElement) return;
 
     const { scrollTop, scrollHeight, clientHeight } = mainElement;
 
-    if (scrollTop + clientHeight >= scrollHeight - 50 && !getNext) {
-      setGetNext(true);
+    if (
+      scrollTop + clientHeight >= scrollHeight - 50 &&
+      hasNextPage &&
+      !isFetchingNextPage
+    ) {
+      fetchNextPage();
     }
-  }, [getNext, careers]);
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   useEffect(() => {
     const mainElement = document.querySelector('main');
@@ -52,23 +51,37 @@ export function PostsList() {
     };
   }, [handleScroll]);
 
-  if (!careers) return null;
+  if (!data) return null;
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center mt-6">
+        <Loader />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p className="text-red-500">Failed to load posts.</p>;
+  }
 
   return (
     <ul className="space-y-6 mt-6">
-      {careers.results.map((post) => (
-        <li key={post.id}>
-          <Post data={post} />
-        </li>
-      ))}
-      {careers.results.length >= careers.count && (
-        <div className="flex justify-center items-center mt-6">
-          <p className="text-gray-dark">Ops, No more posts</p>
-        </div>
+      {data.pages.map((page) =>
+        page.results.map((post) => (
+          <li key={post.id}>
+            <Post data={post} />
+          </li>
+        )),
       )}
-      {!firstLoad && getNext && (
+      {isFetchingNextPage && (
         <div className="flex justify-center items-center mt-6">
           <Loader />
+        </div>
+      )}
+      {!hasNextPage && (
+        <div className="flex justify-center items-center mt-6">
+          <p className="text-gray-dark">Ops, No more posts</p>
         </div>
       )}
     </ul>

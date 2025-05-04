@@ -41,7 +41,7 @@ export async function getCareers({
   }
 }
 
-interface PostCareersRequest {
+export interface PostCareersRequest {
   username: string;
   title: string;
   content: string;
@@ -73,7 +73,7 @@ export async function deleteCareer(id: number) {
   }
 }
 
-interface EditCareerRequest {
+export interface EditCareerRequest {
   title: string;
   content: string;
 }
