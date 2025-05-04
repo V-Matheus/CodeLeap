@@ -1,6 +1,17 @@
 import { CreateMyPost } from '@/components/CreateMyPost';
 import { render } from '@testing-library/react';
 
+jest.mock('@/services/careers', () => ({
+  postCareer: jest.fn(),
+}))
+
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn(() => ({
+    username: 'Victor',
+  })),
+}))
+
+
 describe('CreateMyPost', () => {
   it('should render the create my post component', () => {
     const screen = render(<CreateMyPost />);

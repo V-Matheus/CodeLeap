@@ -6,17 +6,23 @@ jest.mock('date-fns', () => ({
   formatDistanceToNowStrict: jest.fn(),
 }));
 
+jest.mock('@/services/careers', () => ({
+  deleteCareer: jest.fn(),
+  editCareer: jest.fn(),
+}));
+
 describe('Post', () => {
   it('should render the post component', () => {
     (formatDistanceToNowStrict as jest.Mock).mockReturnValue('25 minutes ago');
 
     const mockPost = {
-      id: '1',
+      id: 1,
       title: 'My First Post at CodeLeap Network!',
       content:
         'Curabitur suscipit suscipit tellus. Phasellus consectetuer vestibulum elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.',
       created_datetime: new Date(),
       username: 'Victor',
+      author_ip: '192.168.0.1',
     };
 
     const screen = render(<Post data={mockPost} />);

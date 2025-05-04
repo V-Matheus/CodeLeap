@@ -24,7 +24,6 @@ export async function getCareers({
   try {
     const response = await api.get<GetCareersResponse>('/careers');
     if (response.data.next && getNext) {
-      console.log('getNext');
 
       const nextResponse = await api.get<GetCareersResponse>(
         response.data.next,
