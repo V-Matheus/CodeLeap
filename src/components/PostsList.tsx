@@ -4,6 +4,7 @@ import { useCallback, useEffect } from 'react';
 import { Post } from '@/components/Post';
 import { Loader } from './Loader';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import Skeleton from 'react-loading-skeleton';
 
 export function PostsList() {
   const {
@@ -49,12 +50,10 @@ export function PostsList() {
     };
   }, [handleScroll]);
 
-  if (!data) return null;
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center mt-6">
-        <Loader />
+        <Skeleton count={3} height={180} width={300} />
       </div>
     );
   }
@@ -62,6 +61,8 @@ export function PostsList() {
   if (error) {
     return <p className="text-red-500">Failed to load posts.</p>;
   }
+
+  if (!data) return null;
 
   return (
     <ul className="space-y-6 mt-6">

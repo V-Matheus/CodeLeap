@@ -8,7 +8,7 @@ describe('Button', () => {
     const button = screen.getByRole('button', { name: 'Default' });
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass(
-      'flex items-center justify-center w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer border-1 border-black text-black bg-white active:bg-gray-light',
+      'flex items-center justify-center w-full max-w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer border-1 border-black text-black bg-white active:bg-gray-light',
     );
   });
 
@@ -18,7 +18,7 @@ describe('Button', () => {
     const button = screen.getByRole('button', { name: 'Default' });
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass(
-      'flex items-center justify-center w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer bg-red text-white active:bg-red/80',
+      'flex items-center justify-center w-full max-w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer bg-red text-white active:bg-red/80',
     );
   });
 
@@ -28,17 +28,7 @@ describe('Button', () => {
     const button = screen.getByRole('button', { name: 'Default' });
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass(
-      'flex items-center justify-center w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer bg-green text-white active:bg-green/80',
-    );
-  });
-
-  it('should render the button with submit styles', () => {
-    const screen = render(<Button styles="submit">Default</Button>);
-
-    const button = screen.getByRole('button', { name: 'Default' });
-    expect(button).toBeInTheDocument();
-    expect(button).toHaveClass(
-      'flex items-center justify-center w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer bg-primary text-white active:bg-primary/80',
+      'flex items-center justify-center w-full max-w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer bg-green text-white active:bg-green/80',
     );
   });
 

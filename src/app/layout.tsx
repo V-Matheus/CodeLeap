@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
+import 'react-loading-skeleton/dist/skeleton.css';
 import './globals.css';
 import ClienteProvider from '@/components/ClienteProvider';
 

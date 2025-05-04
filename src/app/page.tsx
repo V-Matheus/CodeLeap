@@ -1,7 +1,17 @@
 import { CreateMyPost } from '@/components/CreateMyPost';
-import { PostsList } from '@/components/PostsList';
+import { Loader } from '@/components/Loader';
+import dynamic from 'next/dynamic';
 
 export const revalidate = 0;
+
+const PostsList = dynamic(
+  () => import('@/components/PostsList').then((module) => module.PostsList),
+  {
+    loading: () => (
+      <Loader />
+    ),
+  },
+);
 
 export default async function Home() {
   return (

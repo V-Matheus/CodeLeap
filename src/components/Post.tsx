@@ -120,7 +120,9 @@ export function Post({ data }: PostProps) {
         transition={{ duration: 0.5 }}
       >
         <header className="flex justify-between items-center p-6 bg-primary rounded-t-2xl border-primary">
-          <h2 className="text-lg mb:text-[22px] text-white font-bold">{data.title}</h2>
+          <h2 className="text-lg mb:text-[22px] text-white font-bold">
+            {data.title}
+          </h2>
           <div className="flex space-x-6">
             <IconButton
               icon={<Image src={Trash} alt="Delete Post" />}
