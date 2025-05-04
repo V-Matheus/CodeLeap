@@ -7,12 +7,19 @@ import {
   Career,
   EditCareerRequest,
 } from '@/services/careers';
+import { useState } from 'react';
 
 export function usePostActions() {
+  const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
 
   const createPost = useMutation<Career, Error, PostCareersRequest>({
-    mutationFn: (post: PostCareersRequest) => postCareer(post),
+    mutationFn: async (post: PostCareersRequest) => {
+      setIsLoading(true);
+      const result = await postCareer(post);
+      setIsLoading(false);
+      return result;
+    },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['careers'] }),
   });
 
@@ -21,12 +28,22 @@ export function usePostActions() {
     Error,
     { id: number; post: EditCareerRequest }
   >({
-    mutationFn: ({ id, post }) => editCareer(id, post),
+    mutationFn: async ({ id, post }) => {
+      setIsLoading(true);
+      const result = await editCareer(id, post);
+      setIsLoading(false);
+      return result;
+    },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['careers'] }),
   });
 
   const deletePost = useMutation<Career, Error, number>({
-    mutationFn: (id) => deleteCareer(id),
+    mutationFn: async (id) => {
+      setIsLoading(true);
+      const result = await deleteCareer(id);
+      setIsLoading(false);
+      return result;
+    },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['careers'] }),
   });
 
@@ -34,5 +51,6 @@ export function usePostActions() {
     createPost,
     editPost,
     deletePost,
+    isLoading,
   };
 }

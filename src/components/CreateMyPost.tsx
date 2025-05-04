@@ -8,12 +8,14 @@ import { usePostActions } from '@/hooks/usePostActions';
 
 export function CreateMyPost() {
   const user = useSelector((state: RootState) => state.user);
-  const { createPost } = usePostActions();
+  const { createPost, isLoading } = usePostActions();
 
   const { register, handleSubmit, reset } = useForm<{
     title: string;
     content: string;
-  }>();
+  }>({
+    mode: 'onChange',
+  });
 
   const onSubmit: SubmitHandler<{ title: string; content: string }> = async (
     data,
@@ -68,7 +70,7 @@ export function CreateMyPost() {
           className="placeholder:text-sm placeholder:text-gray-light pl-3 py-2 border-1 border-gray-dark rounded-lg"
           type="text"
           placeholder="Hello world"
-          {...register('title')}
+          {...register('title', { required: true })}
         />
       </label>
 
@@ -77,11 +79,16 @@ export function CreateMyPost() {
         <textarea
           className="placeholder:text-sm placeholder:text-gray-light pl-3 py-2 border-1 border-gray-dark rounded-lg resize-none"
           placeholder="Content here"
-          {...register('content')}
+          {...register('content', { required: true })}
         />
       </label>
 
-      <Button styles="submit" type="submit" className="self-end">
+      <Button
+        styles="submit"
+        type="submit"
+        className="self-end"
+        disabled={isLoading}
+      >
         Create
       </Button>
     </form>

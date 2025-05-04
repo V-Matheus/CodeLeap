@@ -15,11 +15,10 @@ export default function SignUpPage() {
     try {
       const { ok, user } = await signUp(data.username);
 
-      if (ok  && user) {
+      if (ok && user) {
         dispatch(setUser(user));
         push('/');
       }
-
     } catch (error) {
       console.error('Error during sign up:', error);
     }
@@ -36,7 +35,7 @@ export default function SignUpPage() {
               className="placeholder:text-sm placeholder:text-gray-light pl-3 py-2 border-1 border-gray-dark rounded-lg"
               type="text"
               placeholder="John doe"
-              {...register('username')}
+              {...register('username', { required: true })}
             />
           </label>
           <section className="flex justify-end gap-4 mt-10">
