@@ -73,6 +73,7 @@ export function Post({ data }: PostProps) {
     } catch (error) {
       console.error('Error during sign up:', error);
     } finally {
+      reset();
       setIsModalOpen(false);
     }
   };

@@ -11,7 +11,6 @@ jest.mock('react-redux', () => ({
   })),
 }))
 
-
 describe('CreateMyPost', () => {
   it('should render the create my post component', () => {
     const screen = render(<CreateMyPost />);
