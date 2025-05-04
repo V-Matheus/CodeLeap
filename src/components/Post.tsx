@@ -20,7 +20,7 @@ interface PostProps {
 export function Post({ data }: PostProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'delete' | 'edit' | null>(null);
-  const { deletePost, editPost } = usePostActions();
+  const { deletePost, editPost, isLoading } = usePostActions();
 
   async function handleDelete() {
     deletePost.mutate(data.id, {
@@ -188,7 +188,7 @@ export function Post({ data }: PostProps) {
                 <section className="flex justify-end gap-4 mt-10">
                   <Button onClick={() => setIsModalOpen(false)}>Cancel</Button>
 
-                  <Button type="submit" styles="save">
+                  <Button type="submit" styles="save" isLoading={isLoading}>
                     Save
                   </Button>
                 </section>
@@ -199,7 +199,11 @@ export function Post({ data }: PostProps) {
               <section className="flex justify-end gap-4 mt-10">
                 <Button onClick={() => setIsModalOpen(false)}>Cancel</Button>
 
-                <Button styles="danger" onClick={handleDelete}>
+                <Button
+                  styles="danger"
+                  onClick={handleDelete}
+                  isLoading={isLoading}
+                >
                   Delete
                 </Button>
               </section>

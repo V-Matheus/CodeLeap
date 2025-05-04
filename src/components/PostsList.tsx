@@ -52,8 +52,8 @@ export function PostsList() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center mt-6">
-        <Skeleton count={3} height={180} width={300} />
+      <div className="flex justify-center items-center mt-6 w">
+        <Skeleton count={2} height={180} width={736} />
       </div>
     );
   }

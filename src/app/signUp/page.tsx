@@ -3,15 +3,18 @@ import { Button } from '@/components/Button';
 import { signUp } from '@/services/auth';
 import { setUser } from '@/store/slices/user-slice';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
 export default function SignUpPage() {
+  const [isLoading, setIsLoading] = useState(false);
   const { register, handleSubmit } = useForm<{ username: string }>();
   const { push } = useRouter();
   const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<{ username: string }> = async (data) => {
+    setIsLoading(true);
     try {
       const { ok, user } = await signUp(data.username);
 
@@ -21,6 +24,8 @@ export default function SignUpPage() {
       }
     } catch (error) {
       console.error('Error during sign up:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -41,7 +46,7 @@ export default function SignUpPage() {
             />
           </label>
           <section className="flex justify-end gap-4 mt-10">
-            <Button type="submit" styles={'submit'}>
+            <Button type="submit" styles={'submit'} isLoading={isLoading}>
               ENTER
             </Button>
           </section>

@@ -88,6 +88,7 @@ export function CreateMyPost() {
         type="submit"
         className="self-end"
         disabled={isLoading}
+        isLoading={isLoading}
       >
         Create
       </Button>
