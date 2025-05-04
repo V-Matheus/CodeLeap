@@ -34,7 +34,7 @@ export function Button({
     <button
       disabled={isLoading}
       className={clsx(
-        'flex items-center justify-center w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer',
+        'flex items-center justify-center w-full max-w-[120px] h-[32px] transition-colors rounded-lg box-border font-bold cursor-pointer',
         buttonStyle,
         className,
       )}

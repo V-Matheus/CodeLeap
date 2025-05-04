@@ -120,7 +120,7 @@ export function Post({ data }: PostProps) {
         transition={{ duration: 0.5 }}
       >
         <header className="flex justify-between items-center p-6 bg-primary rounded-t-2xl border-primary">
-          <h2 className="text-[22px] text-white font-bold">{data.title}</h2>
+          <h2 className="text-lg mb:text-[22px] text-white font-bold">{data.title}</h2>
           <div className="flex space-x-6">
             <IconButton
               icon={<Image src={Trash} alt="Delete Post" />}
@@ -143,17 +143,17 @@ export function Post({ data }: PostProps) {
         </header>
         <section className="flex flex-col p-6 border-1 border-t-0 border-gray-medium rounded-b-2xl">
           <div className="flex justify-between items-center">
-            <address className="text-gray-dark text-lg font-bold">
+            <address className="text-gray-dark text-base md:text-lg font-bold">
               @{data.username}
             </address>
-            <time className="text-gray-light text-lg">
+            <time className="text-gray-light text-base md:text-lg">
               {formatDistanceToNowStrict(data.created_datetime, {
                 addSuffix: true,
               })}
             </time>
           </div>
 
-          <p className="text-lg">{data.content}</p>
+          <p className="text-base md:text-lg">{data.content}</p>
         </section>
 
         {isModalOpen && (

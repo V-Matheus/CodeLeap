@@ -26,10 +26,12 @@ export default function SignUpPage() {
 
   return (
     <main className="flex flex-1 justify-center items-center h-screen">
-      <article className="bg-white w-[660px] p-6 rounded-2xl border-1 border-gray-medium">
-        <h2 className="text-[22px] font-bold">Welcome to CodeLeap network!</h2>
+      <article className="bg-white w-[90%] max-w-[660px] p-6 rounded-2xl border-1 border-gray-medium">
+        <h2 className="text-lg md:text-[22px] font-bold">
+          Welcome to CodeLeap network!
+        </h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <label className="flex flex-col gap-2">
+          <label className="flex flex-col gap-2 text-sm md:text-base">
             Please enter your username
             <input
               className="placeholder:text-sm placeholder:text-gray-light pl-3 py-2 border-1 border-gray-dark rounded-lg"
