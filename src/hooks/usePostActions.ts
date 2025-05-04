@@ -25,8 +25,8 @@ export function usePostActions() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['careers'] }),
   });
 
-  const deletePost = useMutation<Career, Error, { id: number }>({
-    mutationFn: ({ id }) => deleteCareer(id),
+  const deletePost = useMutation<Career, Error, number>({
+    mutationFn: (id) => deleteCareer(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['careers'] }),
   });
 

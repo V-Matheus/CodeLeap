@@ -23,8 +23,6 @@ export function PostsList() {
     getNextPageParam: (lastPage) => lastPage.next || undefined,
   });
 
-  console.log(data);
-
   const handleScroll = useCallback(() => {
     const mainElement = document.querySelector('main');
     if (!mainElement) return;

@@ -24,14 +24,10 @@ export async function getCareers({
   try {
     const response = await api.get<GetCareersResponse>('/careers');
     if (response.data.next && getNext) {
-
       const nextResponse = await api.get<GetCareersResponse>(
         response.data.next,
       );
-      response.data.results = [
-        ...response.data.results,
-        ...nextResponse.data.results,
-      ];
+      return nextResponse.data;
     }
 
     return response.data;

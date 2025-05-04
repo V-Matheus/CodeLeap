@@ -1,13 +1,14 @@
 'use client';
-import { postCareer } from '@/services/careers';
 import { Button } from './Button';
 import { RootState } from '@/store/store';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Bounce, toast } from 'react-toastify';
+import { usePostActions } from '@/hooks/usePostActions';
 
 export function CreateMyPost() {
   const user = useSelector((state: RootState) => state.user);
+  const { createPost } = usePostActions();
 
   const { register, handleSubmit, reset } = useForm<{
     title: string;
@@ -17,28 +18,42 @@ export function CreateMyPost() {
   const onSubmit: SubmitHandler<{ title: string; content: string }> = async (
     data,
   ) => {
-    try {
-      await postCareer({
+    createPost.mutate(
+      {
         username: user.username,
         title: data.title,
         content: data.content,
-      });
+      },
+      {
+        onSuccess: () => {
+          reset();
 
-      reset();
-
-      toast.success('Career created', {
-        position: 'bottom-right',
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      });
-    } catch (error) {
-      console.error('Error during sign up:', error);
-    }
+          toast.success('Career created', {
+            position: 'bottom-right',
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+            transition: Bounce,
+          });
+        },
+        onError: (error) => {
+          console.error('Error creating post:', error);
+          toast.error('Failed to create post.', {
+            position: 'bottom-right',
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+            transition: Bounce,
+          });
+        },
+      },
+    );
   };
 
   return (

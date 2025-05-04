@@ -1,15 +1,22 @@
 import { Post } from '@/components/Post';
 import { act, fireEvent, render } from '@testing-library/react';
 import { formatDistanceToNowStrict } from 'date-fns';
-import { deleteCareer, editCareer } from '@/services/careers';
+
+const mockMutate = jest.fn();
+
+jest.mock('@/hooks/usePostActions', () => ({
+  usePostActions: jest.fn(() => ({
+    editPost: {
+      mutate: mockMutate,
+    },
+    deletePost: {
+      mutate: mockMutate,
+    },
+  })),
+}));
 
 jest.mock('date-fns', () => ({
   formatDistanceToNowStrict: jest.fn(),
-}));
-
-jest.mock('@/services/careers', () => ({
-  deleteCareer: jest.fn(),
-  editCareer: jest.fn(),
 }));
 
 describe('Post', () => {
@@ -22,6 +29,9 @@ describe('Post', () => {
     username: 'Victor',
     author_ip: '192.168.0.1',
   };
+  beforeEach(() => {
+    mockMutate.mockClear();
+  });
 
   it('should render the post component', () => {
     (formatDistanceToNowStrict as jest.Mock).mockReturnValue('25 minutes ago');
@@ -73,8 +83,8 @@ describe('Post', () => {
       fireEvent.click(confirmButton);
     });
 
-    expect(deleteCareer).toHaveBeenCalledTimes(1);
-    expect(deleteCareer).toHaveBeenCalledWith(mockPost.id);
+    expect(mockMutate).toHaveBeenCalledTimes(1);
+    expect(mockMutate).toHaveBeenCalledWith(mockPost.id, expect.any(Object));
   });
 
   it('should edit the post when the button of modal has clicked', async () => {
@@ -114,10 +124,16 @@ describe('Post', () => {
       fireEvent.click(saveButton);
     });
 
-    expect(editCareer).toHaveBeenCalledTimes(1);
-    expect(editCareer).toHaveBeenCalledWith(mockPost.id, {
-      title: 'New Title',
-      content: 'New Content',
-    });
+    expect(mockMutate).toHaveBeenCalledTimes(1);
+    expect(mockMutate).toHaveBeenCalledWith(
+      {
+        id: mockPost.id,
+        post: {
+          title: 'New Title',
+          content: 'New Content',
+        },
+      },
+      expect.any(Object),
+    );
   });
 });

@@ -7,10 +7,11 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import { Modal } from './Modal';
 import { useState } from 'react';
 import { Button, IconButton } from './Button';
-import { Career, deleteCareer, editCareer } from '@/services/careers';
+import { Career } from '@/services/careers';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Bounce, toast } from 'react-toastify';
 import { AnimatePresence, motion } from 'framer-motion';
+import { usePostActions } from '@/hooks/usePostActions';
 
 interface PostProps {
   data: Career;
@@ -19,25 +20,38 @@ interface PostProps {
 export function Post({ data }: PostProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'delete' | 'edit' | null>(null);
+  const { deletePost, editPost } = usePostActions();
 
   async function handleDelete() {
-    try {
-      await deleteCareer(data.id);
-      toast.success('Career deleted', {
-        position: 'bottom-right',
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      });
-    } catch (error) {
-      console.error('Error during sign up:', error);
-    } finally {
-      setIsModalOpen(false);
-    }
+    deletePost.mutate(data.id, {
+      onSuccess: () => {
+        toast.success('Career deleted', {
+          position: 'bottom-right',
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          transition: Bounce,
+        });
+        setIsModalOpen(false);
+      },
+      onError: (error) => {
+        console.error('Error delete post:', error);
+        toast.error('Failed to create post.', {
+          position: 'bottom-right',
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          transition: Bounce,
+        });
+        setIsModalOpen(false);
+      },
+    });
   }
 
   const { register, handleSubmit, reset, setValue } = useForm<{
@@ -51,31 +65,49 @@ export function Post({ data }: PostProps) {
   const handleEdit: SubmitHandler<{ title: string; content: string }> = async (
     request,
   ) => {
-    try {
-      await editCareer(data.id, {
-        title: request.title,
-        content: request.content,
-      });
+    editPost.mutate(
+      {
+        id: data.id,
+        post: {
+          title: request.title,
+          content: request.content,
+        },
+      },
+      {
+        onSuccess() {
+          reset();
 
-      reset();
+          toast.success('Career edited', {
+            position: 'bottom-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+            transition: Bounce,
+          });
 
-      toast.success('Career edited', {
-        position: 'bottom-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
-      });
-    } catch (error) {
-      console.error('Error during sign up:', error);
-    } finally {
-      reset();
-      setIsModalOpen(false);
-    }
+          setIsModalOpen(false);
+        },
+        onError(error) {
+          console.error('Error edit post:', error);
+          toast.error('Failed to create post.', {
+            position: 'bottom-right',
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+            transition: Bounce,
+          });
+          reset();
+          setIsModalOpen(false);
+        },
+      },
+    );
   };
 
   return (

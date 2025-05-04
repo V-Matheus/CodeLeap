@@ -1,10 +1,15 @@
-import { CreateMyPost } from '@/components/CreateMyPost';
 import { fireEvent, render } from '@testing-library/react';
 import { act } from 'react';
-import { postCareer } from '@/services/careers';
+import { CreateMyPost } from '@/components/CreateMyPost';
 
-jest.mock('@/services/careers', () => ({
-  postCareer: jest.fn(),
+const mockMutate = jest.fn();
+
+jest.mock('@/hooks/usePostActions', () => ({
+  usePostActions: jest.fn(() => ({
+    createPost: {
+      mutate: mockMutate,
+    },
+  })),
 }));
 
 jest.mock('react-redux', () => ({
@@ -53,11 +58,14 @@ describe('CreateMyPost', () => {
       fireEvent.submit(submitButton);
     });
 
-    expect(postCareer)
-    expect(postCareer).toHaveBeenCalledWith({
-      username: 'Victor',
-      title: 'Hello world',
-      content: 'Content here',
-    });
+    expect(mockMutate);
+    expect(mockMutate).toHaveBeenCalledWith(
+      {
+        username: 'Victor',
+        title: 'Hello world',
+        content: 'Content here',
+      },
+      expect.any(Object),
+    );
   });
 });
