@@ -8,6 +8,16 @@ export async function signUp(username: string) {
   try {
     const id = uuidv4();
 
+    const token = (await cookies()).get(`${COOKIES_KEY}:token`)?.value;
+
+    if (token) {
+      return {
+        message: 'User signed up successfully',
+        ok: true,
+        user: { id, username },
+      };
+    }
+
     (await cookies()).set(`${COOKIES_KEY}:token`, id, {
       httpOnly: true,
       secure: true,
