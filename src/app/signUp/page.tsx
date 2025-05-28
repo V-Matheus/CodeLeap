@@ -1,9 +1,9 @@
 'use client';
 import { Button } from '@/components/Button';
-import { signUp } from '@/services/auth';
+import { logout, signUp } from '@/services/auth';
 import { setUser } from '@/store/slices/user-slice';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
@@ -28,6 +28,10 @@ export default function SignUpPage() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    logout();
+  }, []);
 
   return (
     <main className="flex flex-1 justify-center items-center h-screen">

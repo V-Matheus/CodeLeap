@@ -35,3 +35,14 @@ export async function signUp(username: string) {
     return { error: 'Failed to set cookie', ok: false, user: null };
   }
 }
+
+export async function logout() {
+  try {
+    (await cookies()).delete(`${COOKIES_KEY}:token`);
+
+    return { message: 'User logged out successfully', ok: true };
+  } catch (error) {
+    console.error('Error deleting cookie:', error);
+    return { error: 'Failed to delete cookie', ok: false };
+  }
+}
